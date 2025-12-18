@@ -26,6 +26,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -47,6 +48,8 @@ public class RobotContainer {
     public final Intake intakeSub = new Intake();
 
     public final Indexer indexerSub = new Indexer();
+
+    public final Shooter shooterSub = new Shooter();
 
     private final SendableChooser<Command> autoChooser;
 
@@ -93,9 +96,11 @@ public class RobotContainer {
 
         joystick.leftTrigger().onTrue(new InstantCommand(() -> intakeSub.spin(0.3)));
         joystick.leftTrigger().onFalse(new InstantCommand(() -> intakeSub.spin(0)));
+ 
+        joystick.leftBumper().onTrue(new InstantCommand(() -> indexerSub.spinNoIntake(0.3)));
+        joystick.leftBumper().onFalse(new InstantCommand(() -> indexerSub.spinNoIntake(0)));
 
-        joystick.leftBumper().onTrue(new InstantCommand(() -> indexerSub.spin(0.3)));
-        joystick.leftBumper().onFalse(new InstantCommand(() -> indexerSub.spin(0)));
+        joystick.rightTrigger().onTrue(new InstantCommand(()-> shooterSub.spinWithFeed(1,1,indexerSub,intakeSub)));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }

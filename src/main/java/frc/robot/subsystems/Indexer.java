@@ -20,9 +20,15 @@ public class Indexer extends SubsystemBase {
 
   }
 
-  public void spin(double speed){
+  public void spin(double speed, Intake intake){
+    intake.spin(speed);
     indexerMotor.set(-speed);
     indexerMotor2.set(speed);
+  }
+
+  public void spinNoIntake(double speed) {
+    indexerMotor.set(speed);
+    indexerMotor2.set(-speed);
   }
 
   @Override
