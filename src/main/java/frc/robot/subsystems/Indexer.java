@@ -15,7 +15,7 @@ public class Indexer extends SubsystemBase {
 
   /** Creates a new Indexer. */
   public Indexer() {
-        indexerMotor= new SparkMax(11, MotorType.kBrushless);
+        indexerMotor= new SparkMax(20, MotorType.kBrushless);
         indexerMotor2= new SparkMax(4, MotorType.kBrushless);
 
   }

@@ -88,7 +88,7 @@ public class RobotContainer {
         // joystick.rightTrigger().onTrue(new InstantCommand(()-> shooterSub.spinWithFeed(1,1,indexerSub,intakeSub)));
         joystick.rightTrigger().onTrue(new InstantCommand(() -> shooterSub.spinNoFeed(0.5, 0.5)));
         joystick.rightTrigger().onFalse(new InstantCommand(() -> shooterSub.spinNoFeed(0, 0)));
-        joystick.rightBumper().onTrue(new InstantCommand(() -> shooterSub.spinNoFeed(-0.5, -0.5)));
+        joystick.rightBumper().onTrue(new InstantCommand(() -> shooterSub.spinNoFeed(-0.25, -0.8)));
         joystick.rightBumper().onFalse(new InstantCommand(() -> shooterSub.spinNoFeed(0, 0)));
 
 
