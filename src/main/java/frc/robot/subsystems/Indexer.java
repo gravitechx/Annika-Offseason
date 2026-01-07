@@ -15,15 +15,15 @@ public class Indexer extends SubsystemBase {
 
   /** Creates a new Indexer. */
   public Indexer() {
-        indexerMotor= new SparkMax(0, MotorType.kBrushless);
-        indexerMotor2= new SparkMax(1, MotorType.kBrushless);
+        indexerMotor= new SparkMax(11, MotorType.kBrushless);
+        indexerMotor2= new SparkMax(4, MotorType.kBrushless);
 
   }
 
   public void spin(double speed, Intake intake){
     intake.spin(speed);
-    indexerMotor.set(-speed);
-    indexerMotor2.set(speed);
+    indexerMotor.set(speed);
+    indexerMotor2.set(-speed);
   }
 
   public void spinNoIntake(double speed) {

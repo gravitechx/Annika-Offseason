@@ -8,9 +8,9 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.FollowPathCommand;
-import com.pathplanner.lib.commands.PathPlannerAuto;
+// import com.pathplanner.lib.auto.AutoBuilder;
+// import com.pathplanner.lib.commands.FollowPathCommand;
+// import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -42,7 +42,7 @@ public class RobotContainer {
 
     private final CommandXboxController joystick = new CommandXboxController(0);
 
-    public final Intake intakeSub = new Intake();
+    // public final Intake intakeSub = new Intake();
 
     public final Indexer indexerSub = new Indexer();
 
@@ -51,41 +51,51 @@ public class RobotContainer {
     private Swerve s_swerve = new Swerve();
 
 
-    private final SendableChooser<Command> autoChooser;
+    // private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
-        autoChooser = AutoBuilder.buildAutoChooser("Tests");
-        SmartDashboard.putData("Auto Mode", autoChooser);
-        FollowPathCommand.warmupCommand().schedule();
+        // autoChooser = AutoBuilder.buildAutoChooser("Tests");
+        // SmartDashboard.putData("Auto Mode", autoChooser);
+        // FollowPathCommand.warmupCommand().schedule();
 
         configureBindings();
     }
 
     private void configureBindings() {
         
-        s_swerve.setDefaultCommand(
-            new DriveCommand(
-                s_swerve, 
-                () -> -joystick.getLeftX(), 
-                () -> joystick.getLeftY(),
-                () -> joystick.getRightX(), 
-                true
-            )
-        );
+        // s_swerve.setDefaultCommand(
+        //     new DriveCommand(
+        //         s_swerve, 
+        //         () -> -joystick.getLeftX(), 
+        //         () -> joystick.getLeftY(),
+        //         () -> joystick.getRightX(), 
+        //         true
+        //     )
+        // );
 
         final var idle = new SwerveRequest.Idle();
 
-        joystick.leftTrigger().onTrue(new InstantCommand(() -> intakeSub.spin(0.3)));
-        joystick.leftTrigger().onFalse(new InstantCommand(() -> intakeSub.spin(0)));
+        // joystick.leftTrigger().onTrue(new InstantCommand(() -> intakeSub.spin(0.3)));
+        // joystick.leftTrigger().onFalse(new InstantCommand(() -> intakeSub.spin(0)));
  
         joystick.leftBumper().onTrue(new InstantCommand(() -> indexerSub.spinNoIntake(0.3)));
         joystick.leftBumper().onFalse(new InstantCommand(() -> indexerSub.spinNoIntake(0)));
+        joystick.x().onTrue(new InstantCommand(() -> indexerSub.spinNoIntake(-0.3)));
+        joystick.x().onFalse(new InstantCommand(() -> indexerSub.spinNoIntake(0)));
 
-        joystick.rightTrigger().onTrue(new InstantCommand(()-> shooterSub.spinWithFeed(1,1,indexerSub,intakeSub)));
+
+
+        // joystick.rightTrigger().onTrue(new InstantCommand(()-> shooterSub.spinWithFeed(1,1,indexerSub,intakeSub)));
+        joystick.rightTrigger().onTrue(new InstantCommand(() -> shooterSub.spinNoFeed(0.5, 0.5)));
+        joystick.rightTrigger().onFalse(new InstantCommand(() -> shooterSub.spinNoFeed(0, 0)));
+        joystick.rightBumper().onTrue(new InstantCommand(() -> shooterSub.spinNoFeed(-0.5, -0.5)));
+        joystick.rightBumper().onFalse(new InstantCommand(() -> shooterSub.spinNoFeed(0, 0)));
+
+
+
 
     }
-
-    public Command getAutonomousCommand() {
-    return autoChooser.getSelected(); 
-}
+    // public Command getAutonomousCommand() {
+//     return autoChooser.getSelected(); 
+// }
 }

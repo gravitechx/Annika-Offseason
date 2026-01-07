@@ -1,10 +1,10 @@
 package frc.robot.subsystems;
 import static frc.robot.Constants.Swerve.*;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.config.PIDConstants;
-import com.pathplanner.lib.config.RobotConfig;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+// import com.pathplanner.lib.auto.AutoBuilder;
+// import com.pathplanner.lib.config.PIDConstants;
+// import com.pathplanner.lib.config.RobotConfig;
+// import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
 
@@ -61,7 +61,7 @@ public class Swerve extends SubsystemBase{
             getModulePositions()
         );
 
-        configureAutoBuilder();
+        // configureAutoBuilder();
     }
     @Override
     public void periodic(){
@@ -175,27 +175,27 @@ public class Swerve extends SubsystemBase{
         }
     }
 
-    public void configureAutoBuilder(){
-        RobotConfig config;
-        try{
-            config = RobotConfig.fromGUISettings();
-            AutoBuilder.configure(
-                this::getPose,
-                this::resetPose,
-                this::getRobotRelativeSpeeds,
-                (speeds, feedforwards) -> this.driveAuto(speeds),
-                new PPHolonomicDriveController(
-                    new PIDConstants(5.0), 
-                    new PIDConstants(2.5)
-                ),
-                config,
-                () -> false,
-                this
-            );
-        } catch (Exception e) {
-            // Handle exception as needed
-            e.printStackTrace();
-        }
+    // public void configureAutoBuilder(){
+    //     RobotConfig config;
+    //     try{
+    //         config = RobotConfig.fromGUISettings();
+    //         AutoBuilder.configure(
+    //             this::getPose,
+    //             this::resetPose,
+    //             this::getRobotRelativeSpeeds,
+    //             (speeds, feedforwards) -> this.driveAuto(speeds),
+    //             new PPHolonomicDriveController(
+    //                 new PIDConstants(5.0), 
+    //                 new PIDConstants(2.5)
+    //             ),
+    //             config,
+    //             () -> false,
+    //             this
+    //         );
+    //     } catch (Exception e) {
+    //         // Handle exception as needed
+    //         e.printStackTrace();
+    //     }
         
-    }
+    // }
 }

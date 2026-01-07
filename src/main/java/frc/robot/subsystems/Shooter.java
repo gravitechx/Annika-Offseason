@@ -16,9 +16,8 @@ public class Shooter extends SubsystemBase {
 
   /** Creates a new Shooter. */
   public Shooter() {
-    motor = new SparkMax(0, MotorType.kBrushless);
-    motor2 = new SparkMax(1, MotorType.kBrushless);
-
+    motor = new SparkMax(3, MotorType.kBrushless);
+    motor2 = new SparkMax(17, MotorType.kBrushless);
   }
 
   @Override
