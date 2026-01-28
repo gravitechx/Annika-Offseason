@@ -5,6 +5,9 @@
 package frc.robot.subsystems.shooter;
 
 import com.revrobotics.spark.SparkMax;
+
+import dev.doglog.DogLog;
+
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +31,7 @@ public class Shooter extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         SmartDashboard.putNumber("Shooter motor speed", motor.get());
+        DogLog.log("Shooter State", shooterState);
 
     }
 

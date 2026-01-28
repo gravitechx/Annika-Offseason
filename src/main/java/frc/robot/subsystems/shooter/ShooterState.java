@@ -2,7 +2,7 @@ package frc.robot.subsystems.shooter;
 
 public enum ShooterState {
     IDLE(0, 0),
-    FORWARDS(-8, -8),
+    FORWARDS(-5, -8),
     BACKWARDS(8, 8);
 
     private double voltage;

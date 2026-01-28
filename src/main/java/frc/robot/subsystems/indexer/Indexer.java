@@ -7,6 +7,7 @@ package frc.robot.subsystems.indexer;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
+import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeState;
@@ -43,5 +44,7 @@ public class Indexer extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        DogLog.log("Indexer State", indexerState);
+
     }
 }

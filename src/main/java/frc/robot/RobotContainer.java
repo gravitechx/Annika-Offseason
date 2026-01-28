@@ -6,6 +6,8 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.time.Instant;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 // import com.pathplanner.lib.auto.AutoBuilder;
@@ -14,6 +16,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,6 +34,7 @@ import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.indexer.IndexerState;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeState;
+import frc.robot.subsystems.robotManager.RobotManager;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterState;
 
@@ -46,11 +50,13 @@ public class RobotContainer {
 
     private final CommandXboxController joystick = new CommandXboxController(0);
 
-    public final Intake intakeSub = new Intake();
+    // public final Intake intakeSub = new Intake();
 
-    public final Indexer indexerSub = new Indexer();
+    // public final Indexer indexerSub = new Indexer();
 
-    public final Shooter shooterSub = new Shooter();
+    // public final Shooter shooterSub = new Shooter();
+
+    public RobotManager robotManager = new RobotManager();
 
     private Swerve s_swerve = new Swerve();
 
@@ -76,31 +82,20 @@ public class RobotContainer {
 
         final var idle = new SwerveRequest.Idle();
 
-        joystick.leftTrigger().onTrue(new InstantCommand(() -> intakeSub.setState(IntakeState.INTAKING)));
-        joystick.leftTrigger().onFalse(new InstantCommand(() -> intakeSub.setState(IntakeState.IDLE)));
+        joystick.leftTrigger().onTrue(new InstantCommand(
+                () -> robotManager.setRobotState(frc.robot.subsystems.robotManager.RobotState.INTAKING)));
+        joystick.leftTrigger().onFalse(new InstantCommand(
+                () -> robotManager.setRobotState(frc.robot.subsystems.robotManager.RobotState.IDLE)));
 
-        // joystick.leftBumper().onTrue(new InstantCommand(() ->
-        // indexerSub.setState(IndexerState.FORWARDS)));
-        // joystick.leftBumper().onFalse(new InstantCommand(() ->
-        // indexerSub.setState(IndexerState.IDLE)));
-        // joystick.x().onTrue(new InstantCommand(() -> indexerSub.setState()));
-        // joystick.x().onFalse(new InstantCommand(() -> indexerSub.setState(0)));
-
-        // joystick.rightTrigger().onTrue(new InstantCommand(()->
-        // shooterSub.spinWithFeed(1,1,indexerSub,intakeSub)));
         joystick.rightTrigger().onTrue(new SequentialCommandGroup(
-                new InstantCommand(() -> shooterSub.setState(ShooterState.FORWARDS)),
+                new InstantCommand(
+                        () -> robotManager.setRobotState(frc.robot.subsystems.robotManager.RobotState.SPIN_UP_SHOOTER)),
                 new WaitCommand(0.3),
-                new InstantCommand(() -> intakeSub.setState(IntakeState.INTAKING)),
-                new InstantCommand(() -> indexerSub.setState(IndexerState.FORWARDS))
+                new InstantCommand(
+                        () -> robotManager.setRobotState(frc.robot.subsystems.robotManager.RobotState.SHOOTING))));
 
-        ));
-        joystick.rightTrigger().onFalse(new SequentialCommandGroup(
-                new InstantCommand(() -> intakeSub.setState(IntakeState.IDLE)),
-                new InstantCommand(() -> indexerSub.setState(IndexerState.IDLE)),
-                new WaitCommand(0.2),
-                new InstantCommand(() -> shooterSub.setState(ShooterState.IDLE))));
-
+        joystick.rightTrigger().onFalse(new InstantCommand(
+                () -> robotManager.setRobotState(frc.robot.subsystems.robotManager.RobotState.IDLE)));
     }
     // public Command getAutonomousCommand() {
     // return autoChooser.getSelected();

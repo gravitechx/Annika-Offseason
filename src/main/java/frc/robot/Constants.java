@@ -33,8 +33,8 @@ public final class Constants {
 
     public static final class Swerve {
         public static final double kMaxSpeedMetersPerSec = 6.5;
-        public static final double maxDriveSpeed = 0.5 * kMaxSpeedMetersPerSec;
-        public static final double kMaxAngularVelocityRad = 0.5 * Math.PI;
+        public static final double maxDriveSpeed = 0.4 * kMaxSpeedMetersPerSec;
+        public static final double kMaxAngularVelocityRad = Math.PI;
         public static final COTSFalconSwerveConstants kSwerveSpecialtyModule = COTSFalconSwerveConstants
                 .SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L1);
         public static final double kWheelCircumference = kSwerveSpecialtyModule.wheelCircumference;
